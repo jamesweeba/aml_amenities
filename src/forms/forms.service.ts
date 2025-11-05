@@ -34,7 +34,7 @@ export class FormsService {
         });
 
         // Fetch paginated results
-        const results = await this.prisma.form.findMany({
+        const data = await this.prisma.form.findMany({
             where: { created_by: user.id },
             skip,
             take: limit,
@@ -50,7 +50,7 @@ export class FormsService {
             count,
             next,
             previous,
-            results,
+            data,
         };
     }
 
