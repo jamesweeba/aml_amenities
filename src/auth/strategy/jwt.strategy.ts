@@ -28,9 +28,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
     console.log('user from jwt strategy', user);
     const { password, ...result } = user;
-    // delete user.password;
     return result;
-    // console.log('JWT Payload:', payload);
-    // return payload 
   }
 }

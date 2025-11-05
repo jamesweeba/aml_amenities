@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ResponsesService } from './responses.service';
+import { ResponsesController } from './responses.controller';
 
-@Module({})
+@Module({
+  providers: [ResponsesService],
+  controllers: [ResponsesController]
+})
 export class ResponsesModule {}
