@@ -1,6 +1,7 @@
 import { Injectable, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { access } from 'fs';
@@ -43,7 +44,7 @@ export class AuthService {
 
         } catch (error) {
             // console.log(error);
-            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error instanceof PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
                     throw new ForbiddenException('Credentials taken')
                 }
@@ -75,7 +76,7 @@ export class AuthService {
             sub: userId,
             email,
         };
-        const token = await this.jwt.signAsync(payload, { expiresIn: '1h', secret: process.env.JWT_SECERET });
+        const token = await this.jwt.signAsync(payload, { expiresIn: '1h', secret: process.env.JWT_SECRET });
         return token;
     }
 }
